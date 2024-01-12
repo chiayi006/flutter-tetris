@@ -58,14 +58,17 @@ class _GameBoardState extends State<GameBoard> {
         context: context,
         builder: (context) => AlertDialog(
               title: Text('Game Over!'),
-              content: Text('Your score is : $currentScore'),
+              content: Text(
+                'Your score is : $currentScore',
+                style: TextStyle(fontSize: 20),
+              ),
               actions: [
                 TextButton(
                     onPressed: () {
                       resetGame();
                       Navigator.pop(context);
                     },
-                    child: Text('Play again'))
+                    child: Text('Play again',style: TextStyle(fontSize: 16)))
               ],
             ));
   }
@@ -178,7 +181,7 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   bool isGameOver() {
-    for (int column = 0; column < rowLength; column++) {
+    for (int column = 0; column < rowLength && column < gameBoard[0].length; column++) {
       if (gameBoard[0][column] != null) {
         return true;
       }
@@ -210,7 +213,10 @@ class _GameBoardState extends State<GameBoard> {
                         startGame();
                       });
                     },
-                    child: Text('Start',style: TextStyle(color: Colors.black),),
+                    child: Text(
+                      'Start',
+                      style: TextStyle(color: Colors.black,fontSize: 20),
+                    ),
                   ),
                 ),
               ],
@@ -227,7 +233,11 @@ class _GameBoardState extends State<GameBoard> {
 
                   if (currentPiece.position.contains(index)) {
                     return Pixel(color: currentPiece.color);
-                  } else if (gameBoard[row][column] != null) {
+                  } else if (row >= 0 &&
+                      row < gameBoard.length &&
+                      column >= 0 &&
+                      column < gameBoard[row].length &&
+                      gameBoard[row][column] != null) {
                     final Tetromino? tetrominoType = gameBoard[row][column];
                     return Pixel(color: tetrominoColors[tetrominoType]);
                   } else {
