@@ -30,7 +30,6 @@ class _GameBoardState extends State<GameBoard> {
   @override
   void initState() {
     super.initState();
-    startGame();
   }
 
   void startGame() {
@@ -191,15 +190,32 @@ class _GameBoardState extends State<GameBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.only(top: 80),
-              child: Text('Score: $currentScore',
-                  style: TextStyle(color: Colors.white, fontSize: 24))),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          children: [
+            SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    child: Text('Score: $currentScore',
+                        style: TextStyle(color: Colors.white, fontSize: 24))),
+                SizedBox(width: 150),
+                Container(
+                  width: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        startGame();
+                      });
+                    },
+                    child: Text('Start',style: TextStyle(color: Colors.black),),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
               child: GridView.builder(
                 itemCount: rowLength * columnLength,
                 physics: const NeverScrollableScrollPhysics(),
@@ -220,36 +236,42 @@ class _GameBoardState extends State<GameBoard> {
                 },
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(bottom: 50.0, top: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                    onPressed: moveLeft,
-                    color: Colors.white,
-                    icon: Icon(Icons.arrow_back_ios)),
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: OvalBorder(),
+            Container(
+              padding: const EdgeInsets.only(bottom: 50.0, top: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 100,
+                    child: IconButton(
+                        onPressed: moveLeft,
+                        color: Colors.white,
+                        icon: Icon(Icons.arrow_back_ios)),
                   ),
-                  child: IconButton(
-                      onPressed: rotatePiece,
-                      color: Colors.black,
-                      icon: Icon(Icons.rotate_right)),
-                ),
-                IconButton(
-                    onPressed: moveRight,
-                    color: Colors.white,
-                    icon: Icon(Icons.arrow_forward_ios)),
-              ],
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: OvalBorder(),
+                    ),
+                    child: IconButton(
+                        onPressed: rotatePiece,
+                        color: Colors.black,
+                        icon: Icon(Icons.rotate_right)),
+                  ),
+                  Container(
+                    width: 100,
+                    child: IconButton(
+                        onPressed: moveRight,
+                        color: Colors.white,
+                        icon: Icon(Icons.arrow_forward_ios)),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
